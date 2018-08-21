@@ -70,19 +70,19 @@ class Pokemon {
     }
 }
 
-// let getRaichu = axios.get("https://pokeapi.co/api/v2/pokemon/26/");
-// let getLeafeon = axios.get("https://pokeapi.co/api/v2/pokemon/470/");
-// let getArceus = axios.get("https://pokeapi.co/api/v2/pokemon/493/");
+let getRaichu = axios.get("https://pokeapi.co/api/v2/pokemon/26/");
+let getLeafeon = axios.get("https://pokeapi.co/api/v2/pokemon/470/");
+let getArceus = axios.get("https://pokeapi.co/api/v2/pokemon/493/");
 
-// axios.all([getRaichu, getLeafeon, getArceus])
-// axios.get("https://pokeapi.co/api/v2/pokemon/26")
-// .then(res => {
-//     const poke1 = res[0].data;
-//     const poke2 = res[1].data;
-//     const poke3 = res[2].data;
+axios.all([getRaichu, getLeafeon, getArceus])
+axios.get("https://pokeapi.co/api/v2/pokemon/26")
+.then(res => {
+    const poke1 = res[0];
+    const poke2 = res[1];
+    const poke3 = res[2];
 
-    // console.log(poke1);
-// });
+    console.log(poke1.name);
+});
 
 //  .catch(function(error) => {  
     // console.log(error);
