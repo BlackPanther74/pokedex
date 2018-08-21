@@ -78,11 +78,11 @@ class Pokemon {
     }
 }
 
-const getRaichu = axios.get("https://pokeapi.co/api/v2/pokemon/26/");
-const getLeafeon = axios.get("https://pokeapi.co/api/v2/pokemon/470/");
-const getArceus = axios.get("https://pokeapi.co/api/v2/pokemon/493/");
+const chooseRaichu = axios.get("https://pokeapi.co/api/v2/pokemon/26/");
+const chooseLeafeon = axios.get("https://pokeapi.co/api/v2/pokemon/470/");
+const chooseArceus = axios.get("https://pokeapi.co/api/v2/pokemon/493/");
 
-axios.all([getRaichu, getLeafeon, getArceus])
+axios.all([chooseRaichu, chooseLeafeon, chooseArceus])
 // axios.get("https://pokeapi.co/api/v2/pokemon/26")
 .then(catchem => {
     const poke1 = catchem[0].data;
@@ -113,7 +113,7 @@ axios.all([getRaichu, getLeafeon, getArceus])
     console.log(pokeball);
     console.log(naruto);
 
-    console.log(naruto.get(raichu));
+    console.log(naruto.get("raichu"));
 
 // Console log Raichu
     // console.log(poke1);
