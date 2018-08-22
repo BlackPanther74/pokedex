@@ -1,3 +1,5 @@
+M.AutoInit();
+
 class Trainers {
     constructor() {
         this.all = []
@@ -119,6 +121,78 @@ class Pokemon {
     }
 }
 
+let divBox = document.getElementById("box");
+
+function myPokemom(pokemon) {
+  let myDiv = document.createElement("div");
+
+  let panelColor = "card-panel grey";
+
+  if (pokemon.name === "leafeon"){
+    panelColor = "card-panel green lighten-4"; 
+  } else if (pokemon.name === "raichu") {
+    panelColor = "card-panel blue lighten-4";
+  }
+
+  myDiv.innerHTML = (`<div class="row">
+
+  <div class="col l6 s12">
+    <div class="${ panelColor }">
+      <div class="card">
+        <div class="card-image">
+          <img src="images/${ pokemon.id }${ pokemon.name }.png" width="400" height="400" alt="">
+          <span class="card-title">${ pokemon.name }</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col l6 s12">
+    <div class="${ panelColor }">
+      <ul class="collapsible">
+        <li class="active">
+          <div class="collapsible-header">
+            <i class="material-icons">star_outline</i>Stats</div>
+          <div class="collapsible-body">
+            <span>
+              <ul>
+                <li><strong>Name:</strong>   ${ pokemon.name }</li>
+                <li><strong>HP:</strong>  ${ pokemon.hp }</li>
+                <li><strong>Attack:</strong> ${ pokemon.attack }</li> 
+                <li><strong>Defense:</strong> ${ pokemon.defense }</li>
+                <li><strong>Abilities:</strong> ${ pokemon.abilities }</li>
+              </ul>
+            </span>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header">
+            <i class="material-icons">list</i>Moves</div>
+          <div class="collapsible-body">
+            <div class="progress">
+              <div class="indeterminate"></div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header">
+            <i class="material-icons">info_outline</i>About</div>
+          <div class="collapsible-body">
+            <span>${ pokemon.info }</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>`);
+
+divBox.appendChild(myDiv);
+
+M.AutoInit();
+
+}
+
 const chooseRaichu = axios.get("http://fizal.me/pokeapi/api/26.json");
 const chooseLeafeon = axios.get("http://fizal.me/pokeapi/api/470.json");
 const chooseArceus = axios.get("http://fizal.me/pokeapi/api/493.json");
@@ -130,7 +204,7 @@ axios.all([chooseRaichu, chooseLeafeon, chooseArceus])
         const poke2 = catchem[1].data;
         const poke3 = catchem[2].data;
 
-        M.AutoInit();
+        
 
         // catchem.forEach(getMoves => {
 
@@ -199,6 +273,14 @@ axios.all([chooseRaichu, chooseLeafeon, chooseArceus])
         console.log(naruto);
 
         console.log(naruto.get("raichu"));
+        console.log(naruto.get("leafeon"));
+        console.log(naruto.get("arceus"));
+        console.log(pokeball.get("raichu"));
+
+        myPokemom(arceus);
+        myPokemom(leafeon);
+        myPokemom(raichu);
+
 
         // Console log Raichu
         // console.log(poke1);
@@ -242,3 +324,5 @@ axios.all([chooseRaichu, chooseLeafeon, chooseArceus])
     }).catch((error) => {
         console.log(error);
     })
+
+console.log(raichu.get());
