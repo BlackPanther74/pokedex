@@ -1,5 +1,5 @@
 class Trainers {
-    constructor(){
+    constructor() {
         this.all = []
     }
 
@@ -15,12 +15,12 @@ class Trainers {
 }
 
 class Trainer {
-    constructor(name, gender, hometown, occupation, pokemon){ 
-    this.name = name;
-    this.gender = gender;
-    this.hometown = hometown;
-    this.occupation = occupation;
-    this.pokemon = [];
+    constructor(name, gender, hometown, occupation, pokemon) {
+        this.name = name;
+        this.gender = gender;
+        this.hometown = hometown;
+        this.occupation = occupation;
+        this.pokemon = [];
     }
 
     add(pokemon) {
@@ -53,14 +53,14 @@ class Pokeball {
             return element.name = name
         })
     }
-    
+
 }
 const pokeball = new Pokeball();
 console.log(pokeball);
 
 class Pokemon {
     // constructor(id, name, weight, height, type, hp, attack, defense, abilities) {
-    constructor(data) {
+    constructor(data, info) {
         // console.log(data);
         this.id = data.id;
         this.name = data.name;
@@ -71,11 +71,51 @@ class Pokemon {
         this.attack = data.stats[4].base_stat;
         this.defense = data.stats[3].base_stat;
         this.abilities = [];
-        this.moves = data.moves;
+        this.move = data.move;
+        this.info = info;
 
         for (let i = 0; i < data.abilities.length; i++) {
             this.abilities.push(data.abilities[i].ability.name)
         }
+
+        function getMoves(data) {
+            makingMoves = data.moves;
+            let move = [];
+            let ctr = makingMoves.length;
+              for (let i = 0; i < 4; i++) {
+                let randMoves = Math.floor(Math.random() * ctr);
+                axios.get(makingMoves[randMoves].move.url)
+                  .then(function (catchemBonus) {
+                      let pokemoves = catchemBonus.data;
+                      console.log(pokemoves);
+                      console.log(`Moves${i}: ${makingMoves[randMoves].move.name}
+                                   Accruacy: ${pokemoves.accuracy}
+                                   Power: ${pokemoves.power}
+                                   Priority: ${pokemoves.priority}`);
+
+                        move.push(`Moves${i}: \u00A0\u00A0${makingMoves[randMoves].move.name}\u00A0\u00A0
+                                                 Accuracy: ${pokemoves.accuracy}\u00A0\u00A0
+                                                 Power: ${pokemoves.power}\u00A0\u00A0
+                                                 Priority: ${pokemoves.priority}`);
+
+                        // return 
+                        //     `Moves${i}: ${makingMoves[randMoves].move.name}
+                        //      Accruacy: ${bong.accuracy}
+                        //      Power: ${bong.power}
+                        //      Priority: ${bong.priority}`;
+
+
+                    }).catch(function (response) {
+                        console.error(response);
+                    })
+            }
+
+            return data.push(move);
+            // console.log(catchem[c].moves);
+          // }  
+
+        }
+
     }
 }
 
@@ -84,119 +124,121 @@ const chooseLeafeon = axios.get("http://fizal.me/pokeapi/api/470.json");
 const chooseArceus = axios.get("http://fizal.me/pokeapi/api/493.json");
 
 axios.all([chooseRaichu, chooseLeafeon, chooseArceus])
-// axios.get("https://pokeapi.co/api/v2/pokemon/26")
-.then(catchem => {
-    const poke1 = catchem[0].data;
-    const poke2 = catchem[1].data;
-    const poke3 = catchem[2].data;
+    // axios.get("https://pokeapi.co/api/v2/pokemon/26")
+    .then(catchem => {
+        const poke1 = catchem[0].data;
+        const poke2 = catchem[1].data;
+        const poke3 = catchem[2].data;
 
-    M.AutoInit();
+        M.AutoInit();
 
-    // catchem.forEach(getMoves => {
-        
-    // });
-    // for (let c = 0; c < catchem.length; c++) {
-      function getMoves(poke1) {
-        makingMoves = poke1.moves;
-        let move = [];
-        let ctr = makingMoves.length;
-          for (let i = 0; i < 4; i++) {
-            let randMoves = Math.floor(Math.random() * ctr);
-            axios.get(makingMoves[randMoves].move.url)
-              .then(function (catchemBonus) {
-                  let pokemoves = catchemBonus.data;
-                  console.log(pokemoves);
-                  console.log(`Moves${i}: ${makingMoves[randMoves].move.name}
-                               Accruacy: ${pokemoves.accuracy}
-                               Power: ${pokemoves.power}
-                               Priority: ${pokemoves.priority}`);
+        // catchem.forEach(getMoves => {
 
-                    move.push(`Moves${i}: \u00A0\u00A0${makingMoves[randMoves].move.name}\u00A0\u00A0
-                                             Accuracy: ${pokemoves.accuracy}\u00A0\u00A0
-                                             Power: ${pokemoves.power}\u00A0\u00A0
-                                             Priority: ${pokemoves.priority}`);
+        // });
+        // for (let c = 0; c < catchem.length; c++) {
+        // function getMoves(poke1) {
+        //     makingMoves = poke1.moves;
+        //     let move = [];
+        //     let ctr = makingMoves.length;
+        //     for (let i = 0; i < 4; i++) {
+        //         let randMoves = Math.floor(Math.random() * ctr);
+        //         axios.get(makingMoves[randMoves].move.url)
+        //             .then(function (catchemBonus) {
+        //                 let pokemoves = catchemBonus.data;
+        //                 console.log(pokemoves);
+        //                 console.log(`Moves${i}: ${makingMoves[randMoves].move.name}
+        //                        Accruacy: ${pokemoves.accuracy}
+        //                        Power: ${pokemoves.power}
+        //                        Priority: ${pokemoves.priority}`);
 
-                    // return 
-                    //     `Moves${i}: ${makingMoves[randMoves].move.name}
-                    //      Accruacy: ${bong.accuracy}
-                    //      Power: ${bong.power}
-                    //      Priority: ${bong.priority}`;
+        //                 move.push(`Moves${i}: \u00A0\u00A0${makingMoves[randMoves].move.name}\u00A0\u00A0
+        //                                      Accuracy: ${pokemoves.accuracy}\u00A0\u00A0
+        //                                      Power: ${pokemoves.power}\u00A0\u00A0
+        //                                      Priority: ${pokemoves.priority}`);
 
-
-                }).catch(function (response) {
-                    console.error(response);
-                })
-        }
-        return poke1.moves = move;
-        // console.log(catchem[c].moves);
-      // }  
-
-    }
+        //                 // return 
+        //                 //     `Moves${i}: ${makingMoves[randMoves].move.name}
+        //                 //      Accruacy: ${bong.accuracy}
+        //                 //      Power: ${bong.power}
+        //                 //      Priority: ${bong.priority}`;
 
 
-    let raichu = new Pokemon(poke1);
-    console.log(raichu);
-    pokeball.add(raichu);
-    naruto.add(raichu);
+        //             }).catch(function (response) {
+        //                 console.error(response);
+        //             })
+        //     }
+        //     return poke1.move = move;
+        //     // console.log(catchem[c].moves);
+        // }
 
+        // }
 
-    let leafeon = new Pokemon(poke2);
-    console.log(leafeon);
-    pokeball.add(leafeon);
-    naruto.add(leafeon);
+        let raichuInfo = "It becomes aggressive when it has electricity stored up. At such times, even its Trainer has to take care to avoid being attacked."
 
+        let raichu = new Pokemon(poke1, raichuInfo);
+        // raichu.getMoves(poke1);
+        console.log(raichu);
+        pokeball.add(raichu);
+        naruto.add(raichu);
 
-    let arceus = new Pokemon(poke3);
-    console.log(arceus);
-    pokeball.add(arceus);
-    naruto.add(arceus);
+        let leafeonInfo = "It lives a quiet life deep in forests where clean rivers flow."
 
-    console.log(pokeball);
-    console.log(naruto);
+        let leafeon = new Pokemon(poke2, leafeonInfo);
+        console.log(leafeon);
+        pokeball.add(leafeon);
+        naruto.add(leafeon);
 
-    console.log(naruto.get("raichu"));
+        let arceusInfo = "It is told in mythology that this Pokémon was born before the universe even existed."
 
-// Console log Raichu
-    // console.log(poke1);
-    // console.log("id: " + poke1.id);
-    // console.log("name: " + poke1.name);
-    // console.log("weight: " + poke1.weight);
-    // console.log("height: " + poke1.height);
-    // console.log("type: " + poke1.types[0].type.name);
-    // console.log(poke1.stats[5].stat.name + ": " + poke1.stats[5].base_stat);
-    // console.log(poke1.stats[4].stat.name + ": " + poke1.stats[4].base_stat);
-    // console.log(poke1.stats[3].stat.name + ": " + poke1.stats[3].base_stat);
-    // console.log(poke1.abilities[0].ability.name);
-    // console.log(poke1.abilities[1].ability.name);
+        let arceus = new Pokemon(poke3, arceusInfo);
+        console.log(arceus);
+        pokeball.add(arceus);
+        naruto.add(arceus);
 
-// Console log Leafeon
-    // console.log(poke2);
-    // console.log("id: " + poke2.id);
-    // console.log("name: " + poke2.name);
-    // console.log("weight: " + poke2.weight);
-    // console.log("height: " + poke2.height);
-    // console.log("type: " + poke2.types[0].type.name);
-    // console.log(poke2.stats[5].stat.name + ": " + poke2.stats[5].base_stat);
-    // console.log(poke2.stats[4].stat.name + ": " + poke2.stats[5].base_stat);
-    // console.log(poke2.stats[3].stat.name + ": " + poke2.stats[5].base_stat);
-    // console.log(poke2.abilities[0].ability.name);
-    // console.log(poke2.abilities[1].ability.name);
+        console.log(pokeball);
+        console.log(naruto);
 
-// Console log Arceus
-    // console.log(poke3);
-    // console.log("id: " + poke3.id);
-    // console.log("name: " + poke3.name);
-    // console.log("weight: " + poke3.weight);
-    // console.log("height: " + poke3.height);
-    // console.log("type: " + poke3.types[0].type.name);
-    // console.log(poke3.stats[5].stat.name + ": " + poke3.stats[5].base_stat);
-    // console.log(poke3.stats[4].stat.name + ": " + poke3.stats[5].base_stat);
-    // console.log(poke3.stats[3].stat.name + ": " + poke3.stats[5].base_stat);
-    // console.log(poke3.abilities[0].ability.name);
-    // console.log(raichu);
+        console.log(naruto.get("raichu"));
 
-}).catch((error) => {  
-    console.log(error);
-})
+        // Console log Raichu
+        // console.log(poke1);
+        // console.log("id: " + poke1.id);
+        // console.log("name: " + poke1.name);
+        // console.log("weight: " + poke1.weight);
+        // console.log("height: " + poke1.height);
+        // console.log("type: " + poke1.types[0].type.name);
+        // console.log(poke1.stats[5].stat.name + ": " + poke1.stats[5].base_stat);
+        // console.log(poke1.stats[4].stat.name + ": " + poke1.stats[4].base_stat);
+        // console.log(poke1.stats[3].stat.name + ": " + poke1.stats[3].base_stat);
+        // console.log(poke1.abilities[0].ability.name);
+        // console.log(poke1.abilities[1].ability.name);
 
+        // Console log Leafeon
+        // console.log(poke2);
+        // console.log("id: " + poke2.id);
+        // console.log("name: " + poke2.name);
+        // console.log("weight: " + poke2.weight);
+        // console.log("height: " + poke2.height);
+        // console.log("type: " + poke2.types[0].type.name);
+        // console.log(poke2.stats[5].stat.name + ": " + poke2.stats[5].base_stat);
+        // console.log(poke2.stats[4].stat.name + ": " + poke2.stats[5].base_stat);
+        // console.log(poke2.stats[3].stat.name + ": " + poke2.stats[5].base_stat);
+        // console.log(poke2.abilities[0].ability.name);
+        // console.log(poke2.abilities[1].ability.name);
 
+        // Console log Arceus
+        // console.log(poke3);
+        // console.log("id: " + poke3.id);
+        // console.log("name: " + poke3.name);
+        // console.log("weight: " + poke3.weight);
+        // console.log("height: " + poke3.height);
+        // console.log("type: " + poke3.types[0].type.name);
+        // console.log(poke3.stats[5].stat.name + ": " + poke3.stats[5].base_stat);
+        // console.log(poke3.stats[4].stat.name + ": " + poke3.stats[5].base_stat);
+        // console.log(poke3.stats[3].stat.name + ": " + poke3.stats[5].base_stat);
+        // console.log(poke3.abilities[0].ability.name);
+        // console.log(raichu);
+
+    }).catch((error) => {
+        console.log(error);
+    })
