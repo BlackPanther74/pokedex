@@ -71,6 +71,7 @@ class Pokemon {
         this.attack = data.stats[4].base_stat;
         this.defense = data.stats[3].base_stat;
         this.abilities = [];
+        this.moves = [];
 
         for (let i = 0; i < data.abilities.length; i++) {
             this.abilities.push(data.abilities[i].ability.name)
@@ -78,9 +79,9 @@ class Pokemon {
     }
 }
 
-const chooseRaichu = axios.get("https://pokeapi.co/api/v2/pokemon/26/");
-const chooseLeafeon = axios.get("https://pokeapi.co/api/v2/pokemon/470/");
-const chooseArceus = axios.get("https://pokeapi.co/api/v2/pokemon/493/");
+const chooseRaichu = axios.get("http://fizal.me/pokeapi/api/26.json");
+const chooseLeafeon = axios.get("http://fizal.me/pokeapi/api/470.json");
+const chooseArceus = axios.get("http://fizal.me/pokeapi/api/493.json");
 
 axios.all([chooseRaichu, chooseLeafeon, chooseArceus])
 // axios.get("https://pokeapi.co/api/v2/pokemon/26")
@@ -152,16 +153,10 @@ axios.all([chooseRaichu, chooseLeafeon, chooseArceus])
     // console.log(poke3.stats[4].stat.name + ": " + poke3.stats[5].base_stat);
     // console.log(poke3.stats[3].stat.name + ": " + poke3.stats[5].base_stat);
     // console.log(poke3.abilities[0].ability.name);
-
     // console.log(raichu);
 
-});
-
-//  .catch(function(error) => {  
-    // console.log(error);
-    
-// });
-
-
+}).catch((error) => {  
+    console.log(error);
+})
 
 
