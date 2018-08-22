@@ -71,7 +71,7 @@ class Pokemon {
         this.attack = data.stats[4].base_stat;
         this.defense = data.stats[3].base_stat;
         this.abilities = [];
-        this.moves = [];
+        this.moves = data.moves;
 
         for (let i = 0; i < data.abilities.length; i++) {
             this.abilities.push(data.abilities[i].ability.name)
@@ -92,7 +92,47 @@ axios.all([chooseRaichu, chooseLeafeon, chooseArceus])
 
     M.AutoInit();
 
-    // let 
+    // catchem.forEach(getMoves => {
+        
+    // });
+    // for (let c = 0; c < catchem.length; c++) {
+      function getMoves(poke1) {
+        makingMoves = poke1.moves;
+        let move = [];
+        let ctr = makingMoves.length;
+          for (let i = 0; i < 4; i++) {
+            let randMoves = Math.floor(Math.random() * ctr);
+            axios.get(makingMoves[randMoves].move.url)
+              .then(function (catchemBonus) {
+                  let pokemoves = catchemBonus.data;
+                  console.log(pokemoves);
+                  console.log(`Moves${i}: ${makingMoves[randMoves].move.name}
+                               Accruacy: ${pokemoves.accuracy}
+                               Power: ${pokemoves.power}
+                               Priority: ${pokemoves.priority}`);
+
+                    move.push(`Moves${i}: \u00A0\u00A0${makingMoves[randMoves].move.name}\u00A0\u00A0
+                                             Accuracy: ${pokemoves.accuracy}\u00A0\u00A0
+                                             Power: ${pokemoves.power}\u00A0\u00A0
+                                             Priority: ${pokemoves.priority}`);
+
+                    // return 
+                    //     `Moves${i}: ${makingMoves[randMoves].move.name}
+                    //      Accruacy: ${bong.accuracy}
+                    //      Power: ${bong.power}
+                    //      Priority: ${bong.priority}`;
+
+
+                }).catch(function (response) {
+                    console.error(response);
+                })
+        }
+        return poke1.moves = move;
+        // console.log(catchem[c].moves);
+      // }  
+
+    }
+
 
     let raichu = new Pokemon(poke1);
     console.log(raichu);
