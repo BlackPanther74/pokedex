@@ -140,10 +140,6 @@ function myPokemom(pokemon) {
                 <span>
                   <ul>
                     <li><strong>Moves:</strong></li> 
-                    <li>${ pokemon.moves[0] }</li>
-                    <li>${ pokemon.moves[1] }</li>
-                    <li>${ pokemon.moves[2] }</li>
-                    <li>${ pokemon.moves[3] }</li>
                   </ul>
                 </span>
               </div>
@@ -188,7 +184,7 @@ axios.all([chooseRaichu, chooseLeafeon, chooseArceus])
       for (let i = 0; i < 4; i++) {
         let randMoves = Math.floor(Math.random() * ctr);
         axios.get(makingMoves[randMoves].move.url)
-          .then(function (catchemBonus) {
+          .then (function (catchemBonus) {
             let pokemoves = catchemBonus.data;
             console.log(pokemoves);
             console.log(`Moves${i}: ${ makingMoves[randMoves].move.name }
@@ -205,9 +201,9 @@ axios.all([chooseRaichu, chooseLeafeon, chooseArceus])
       }
       return element.move = move;
 
-      getMoves(poke1);
-      getMoves(poke2);
-      getMoves(poke3);
+      // getMoves(poke1);
+      // getMoves(poke2);
+      // getMoves(poke3);
       }
 
     console.log(poke1);
