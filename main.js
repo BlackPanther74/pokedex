@@ -164,9 +164,9 @@ function myPokemom(pokemon) {
 }
 
 // Create constants to hold the three ajax requests
-const chooseRaichu = axios.get("https://pokeapi.co/api/v2/pokemon/26/");
-const chooseLeafeon = axios.get("https://pokeapi.co/api/v2/pokemon/470/");
-const chooseArceus = axios.get("https://pokeapi.co/api/v2/pokemon/493/");
+const chooseRaichu = axios.get("https://fizal.me/pokeapi/api/26.json");
+const chooseLeafeon = axios.get("https://fizal.me/pokeapi/api/470.json");
+const chooseArceus = axios.get("https://fizal.me/pokeapi/api/493.json");
 
 // Use axios.all to call all three promises at once. Thank you Pablo.
 axios.all([chooseRaichu, chooseLeafeon, chooseArceus])
@@ -251,4 +251,4 @@ axios.all([chooseRaichu, chooseLeafeon, chooseArceus])
 
   }).catch((error) => {
     console.log(error);
-  })
+  });
