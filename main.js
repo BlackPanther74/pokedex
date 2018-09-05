@@ -83,6 +83,8 @@ axios.all([chooseRaichu, chooseLeafeon, chooseArceus])
     pokeball.add(arceus);
     naruto.add(arceus);
 
+    console.log(naruto.getAll());
+
     myPokemom(arceus);
     myPokemom(leafeon);
     myPokemom(raichu);
@@ -112,7 +114,7 @@ class Trainers {
 }
 
 // Trainer class object
-class Trainer extends Trainers {
+class Trainer {
   constructor(name, gender, hometown, occupation, pokemon) {
     this.name = name;
     this.gender = gender;
@@ -121,16 +123,19 @@ class Trainer extends Trainers {
     this.pokemon = [];
   }
 
-  add(pokemon) {
-    this.pokemon.push(pokemon)
+  getAll() {
+    return this.pokemon;
   }
 
-  // get(name) {
-  //   return this.pokemon.find((element) => {
-  //     return element.name == name
-  //   })
-  // }
+  add(pokemon) {
+    this.pokemon.push(pokemon);
+  }
 
+  get(name) {
+    return this.pokemon.find((element) => {
+      return element.name == name;
+    })
+  }
 }
 
 //new instance of Trainer class 
@@ -158,7 +163,7 @@ class Pokeball {
 const pokeball = new Pokeball();
 
 // Pokemon class object
-class Pokemon extends Pokeball {
+class Pokemon {
   // constructor(id, name, weight, height, type, hp, attack, defense, abilities) {
   constructor(data, info) {
     // console.log(data);
