@@ -1,5 +1,99 @@
 M.AutoInit();
 
+document.getElementById("btn").onclick = function(event) {
+  alert("Thank you for joining our community. We hope you enjoy your stay!");
+}
+
+// Create constants to hold the three ajax requests
+const chooseRaichu = axios.get("https://fizal.me/pokeapi/api/26.json");
+const chooseLeafeon = axios.get("https://fizal.me/pokeapi/api/470.json");
+const chooseArceus = axios.get("https://fizal.me/pokeapi/api/493.json");
+
+let poke1 = []; // create constants for each promise which represents a different pokemon
+let poke2 = [];
+let poke3 = [];
+
+// Use axios.all to call all three promises at once. Thank you Pablo.
+axios.all([chooseRaichu, chooseLeafeon, chooseArceus])
+  .then(catchem => {
+    poke1 = catchem[0].data; // create constants for each promise which represents a different pokemon
+    poke2 = catchem[1].data;
+    poke3 = catchem[2].data;
+
+    // new ajax request to get moves list for each pokemon - this code was written by Rich but I fully understand how it works 
+    function getMoves(element) {
+      let makingMoves = element.moves;
+      let move = [];
+      let ctr = makingMoves.length;
+
+      for (let i = 0; i < 4; i++) {
+        let randMoves = Math.floor(Math.random() * ctr);
+        axios.get(makingMoves[randMoves].move.url)
+          .then (function (catchemBonus) {
+            let pokemoves = catchemBonus.data;
+            console.log(pokemoves);
+            console.log(`Moves${i}: ${ makingMoves[randMoves].move.name }
+                    Accruacy: ${ pokemoves.accuracy }
+                    Power: ${ pokemoves.power }
+                    Priority: ${ pokemoves.priority }`);
+
+            move.push(`${ makingMoves[randMoves].move.name }: Accuracy: ${ pokemoves.accuracy }, Power: ${ pokemoves.power }, Priority: ${ pokemoves.priority }`);
+
+            element.move = move;
+
+          }).catch(function (response) {
+            console.error(response);
+          })
+      }
+      // console.log(move);
+      // return element.move;
+
+    }
+
+    // console.log(poke1);
+
+
+    // This works but the api is unreliable and breaks more than it works. The ajax request is to a https server
+    getMoves(poke1);
+    getMoves(poke2);
+    getMoves(poke3);
+
+    setTimeout(() => {
+      
+    // the text in the species json is was identical and the ajax call is unreliable similar to the move url -- https://
+    let raichuInfo = "It becomes aggressive when it has electricity stored up. At such times, even its Trainer has to take care to avoid being attacked."
+
+    // These create an instance of my pokemon objects, displays them to console and adds them to the pokeball container and my trainer object
+    let raichu = new Pokemon(poke1, raichuInfo);
+    console.log(raichu);
+    pokeball.add(raichu);
+    naruto.add(raichu);
+
+    let leafeonInfo = "It lives a quiet life deep in forests where clean rivers flow."
+
+    let leafeon = new Pokemon(poke2, leafeonInfo);
+    console.log(leafeon);
+    pokeball.add(leafeon);
+    naruto.add(leafeon);
+
+    let arceusInfo = "It is told in mythology that this Pokémon was born before the universe even existed."
+
+    let arceus = new Pokemon(poke3, arceusInfo);
+    console.log(arceus);
+    pokeball.add(arceus);
+    naruto.add(arceus);
+
+    myPokemom(arceus);
+    myPokemom(leafeon);
+    myPokemom(raichu);
+
+  }, 3000);
+
+
+  }).catch((error) => {
+    console.log(error);
+})
+
 // Trainers container class object
 class Trainers {
   constructor() {
@@ -18,7 +112,7 @@ class Trainers {
 }
 
 // Trainer class object
-class Trainer {
+class Trainer extends Trainers {
   constructor(name, gender, hometown, occupation, pokemon) {
     this.name = name;
     this.gender = gender;
@@ -31,11 +125,11 @@ class Trainer {
     this.pokemon.push(pokemon)
   }
 
-  get(name) {
-    return this.pokemon.find((element) => {
-      return element.name == name
-    })
-  }
+  // get(name) {
+  //   return this.pokemon.find((element) => {
+  //     return element.name == name
+  //   })
+  // }
 
 }
 
@@ -64,7 +158,7 @@ class Pokeball {
 const pokeball = new Pokeball();
 
 // Pokemon class object
-class Pokemon {
+class Pokemon extends Pokeball {
   // constructor(id, name, weight, height, type, hp, attack, defense, abilities) {
   constructor(data, info) {
     // console.log(data);
@@ -86,6 +180,7 @@ class Pokemon {
     }
   }
 }
+
 
 // this variable targets an existing element on the index page by ID
 let divBox = document.getElementById("box");
@@ -139,7 +234,11 @@ function myPokemom(pokemon) {
               <div class="collapsible-body">
                 <span>
                   <ul>
-                    <li><strong>Moves:</strong></li> 
+                    <li><strong>Moves:</strong></li>
+                    <li>${ pokemon.moves[0] } 
+                    <li>${ pokemon.moves[1] } 
+                    <li>${ pokemon.moves[2] } 
+                    <li>${ pokemon.moves[3] } 
                   </ul>
                 </span>
               </div>
@@ -162,93 +261,3 @@ function myPokemom(pokemon) {
   M.AutoInit();
 
 }
-
-// Create constants to hold the three ajax requests
-const chooseRaichu = axios.get("https://fizal.me/pokeapi/api/26.json");
-const chooseLeafeon = axios.get("https://fizal.me/pokeapi/api/470.json");
-const chooseArceus = axios.get("https://fizal.me/pokeapi/api/493.json");
-
-// Use axios.all to call all three promises at once. Thank you Pablo.
-axios.all([chooseRaichu, chooseLeafeon, chooseArceus])
-  .then(catchem => {
-    const poke1 = catchem[0].data; // create constants for each promise which represents a different pokemon
-    const poke2 = catchem[1].data;
-    const poke3 = catchem[2].data;
-
-    // new ajax request to get moves list for each pokemon - this code was written by Rich but I fully understand how it works 
-    function getMoves(element) {
-      let makingMoves = element.moves;
-      let move = [];
-      let ctr = makingMoves.length;
-
-      for (let i = 0; i < 4; i++) {
-        let randMoves = Math.floor(Math.random() * ctr);
-        axios.get(makingMoves[randMoves].move.url)
-          .then (function (catchemBonus) {
-            let pokemoves = catchemBonus.data;
-            console.log(pokemoves);
-            console.log(`Moves${i}: ${ makingMoves[randMoves].move.name }
-                    Accruacy: ${ pokemoves.accuracy }
-                    Power: ${ pokemoves.power }
-                    Priority: ${ pokemoves.priority }`);
-
-            move.push(`${ makingMoves[randMoves].move.name }: Accuracy: ${ pokemoves.accuracy }, Power: ${ pokemoves.power }, Priority: ${ pokemoves.priority }`);
-
-
-          }).catch(function (response) {
-            console.error(response);
-          })
-      }
-      return element.move = move;
-
-      // getMoves(poke1);
-      // getMoves(poke2);
-      // getMoves(poke3);
-      }
-
-    console.log(poke1);
-
-
-    // This works but the api is unreliable and breaks more than it works. The ajax request is to a https server
-    // getMoves(poke1);
-    // getMoves(poke2);
-    // getMoves(poke3);
-
-    // the text in the species json is was identical and the ajax call is unreliable similar to the move url -- https://
-    let raichuInfo = "It becomes aggressive when it has electricity stored up. At such times, even its Trainer has to take care to avoid being attacked."
-
-    // These create an instance of my pokemon objects, displays them to console and adds them to the pokeball container and my trainer object
-    let raichu = new Pokemon(poke1, raichuInfo);
-    console.log(raichu);
-    pokeball.add(raichu);
-    naruto.add(raichu);
-
-    let leafeonInfo = "It lives a quiet life deep in forests where clean rivers flow."
-
-    let leafeon = new Pokemon(poke2, leafeonInfo);
-    console.log(leafeon);
-    pokeball.add(leafeon);
-    naruto.add(leafeon);
-
-    let arceusInfo = "It is told in mythology that this Pokémon was born before the universe even existed."
-
-    let arceus = new Pokemon(poke3, arceusInfo);
-    console.log(arceus);
-    pokeball.add(arceus);
-    naruto.add(arceus);
-
-    // console.log(pokeball);
-    // console.log(naruto);
-
-    // console.log(naruto.get("raichu"));
-    // console.log(naruto.get("leafeon"));
-    // console.log(naruto.get("arceus"));
-    // console.log(pokeball.get("raichu"));
-
-    myPokemom(arceus);
-    myPokemom(leafeon);
-    myPokemom(raichu);
-
-  }).catch((error) => {
-    console.log(error);
-  });
