@@ -83,7 +83,7 @@ axios.all([chooseRaichu, chooseLeafeon, chooseArceus])
     pokeball.add(arceus);
     naruto.add(arceus);
 
-    console.log(naruto.getAll());
+    console.log(naruto.all());
 
     myPokemom(arceus);
     myPokemom(leafeon);
@@ -123,7 +123,7 @@ class Trainer {
     this.pokemon = [];
   }
 
-  getAll() {
+  all() {
     return this.pokemon;
   }
 
